@@ -14,6 +14,19 @@ public class Library {
         users = new ArrayList<>();
     }
 
+    public void borrowBook(String isbn, String userId) {
+        Book book = findBookByIsbn(isbn);
+        User user = findUserByUserId(userId);
+
+        book.borrowBook(user);
+    }
+
+    public void returnBook(String isbn) {
+        Book book = findBookByIsbn(isbn);
+
+        book.returnBook();
+    }
+
     public void addBook(Book book) {
         books.add(book);
     }
@@ -30,6 +43,36 @@ public class Library {
         return users;
     }
     
+    public Book findBookByIsbn(String isbn) {
+        for (Book book : books) {
+            if (book.getIsbn() == isbn){
+                return book;
+            }
+        }
+        return null;
+    }
 
+    public User findUserByUserId(String userId) {
+        for (User user : users) {
+            if (user.getUserID() == userId) {
+                return user;
+            }
+        }
+        return null;
+    }
 
+    public List<Book> searchBooksByTitle(String title) {
+        ArrayList<Book> results = new ArrayList<>();
+
+        for(Book book : books) {
+                if (book.getTitle().toLowerCase().contains(title)) {
+                    results.add(book);
+                }
+            }
+
+        return results;
+
+        }
 }
+
+

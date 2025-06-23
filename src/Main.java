@@ -44,13 +44,13 @@ public class Main {
             index++;
         }
 
-        System.out.println("Available? " + book1.isAvailable());
-        book1.borrowBook(user1);
-        System.out.println("Available? " + book1.isAvailable());
-        System.out.println(book1);
-        book1.returnBook();
-        System.out.println("Available? " + book1.isAvailable());
-        System.out.println(book1);
-    }
+        List<Book> matches = library.searchBooksByTitle("the hobbit");
+
+        for (Book book : matches) {
+            System.out.println(book);
+        }
+
+        
+   }
 
 }
