@@ -44,12 +44,7 @@ public class Main {
             index++;
         }
 
-        List<Book> matches = library.searchBooksByTitle("the hobbit");
-
-        for (Book book : matches) {
-            System.out.println(book);
-        }
-
+        
         
    }
 

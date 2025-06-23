@@ -65,14 +65,58 @@ public class Library {
         ArrayList<Book> results = new ArrayList<>();
 
         for(Book book : books) {
-                if (book.getTitle().toLowerCase().contains(title)) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
                     results.add(book);
-                }
             }
+        }
 
         return results;
 
+    }
+
+    public List<Book> searchBooksByAuthor(String author) {
+        ArrayList<Book> results = new ArrayList<>();
+
+        for (Book book : books) {
+            if (book.getAuthor().toLowerCase().contains(author.toLowerCase())) {
+                results.add(book);
+            }
         }
+
+        return results;
+    }
+
+    public Book searchBooksByIsbn(String isbn) {
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                return book;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<User> searchUsersByName(String name) {
+        ArrayList<User> results = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.getName().toLowerCase().contains(name.toLowerCase())) {
+                results.add(user);
+            }
+        }
+
+        return results;
+    }
+
+    public User searchUsersById(String id) {
+        for (User user : users) {
+            if (user.getUserID().equals(id)) {
+                return user;
+            }
+        }
+
+        return null;
+    }
 }
 
 
