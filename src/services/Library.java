@@ -36,7 +36,15 @@ public class Library {
     }
 
     public void addUser(User user) {
-        users.add(user);
+        String id = user.getUserID();
+
+        if (findUserByUserId(id) == null) {
+            users.add(user);
+            System.out.println("User added.");
+        }
+        else {
+            System.out.println("User already exists");
+        }
     }
 
     public List<User> getAllUsers() {
@@ -54,7 +62,7 @@ public class Library {
 
     public User findUserByUserId(String userId) {
         for (User user : users) {
-            if (user.getUserID() == userId) {
+            if (user.getUserID().equals(userId)) {
                 return user;
             }
         }
@@ -118,5 +126,3 @@ public class Library {
         return null;
     }
 }
-
-
