@@ -57,7 +57,6 @@ public class Main {
                     User newUser = new User(userName, userId, userType);
                     library.addUser(newUser);
 
-                    System.out.println("New user added!");
                     break;
 
                 case "3":
@@ -69,15 +68,47 @@ public class Main {
                     break;
                 
                 case "5":
+                    System.out.println("Title: ");
+                    String searchTitle = scanner.nextLine();
+
+                    List<Book> titleResults = library.searchBooksByTitle(searchTitle);
+                    for (Book book : titleResults) {
+                        System.out.println(book);
+                    }
+
                     break;
 
                 case "6":
+                    System.out.println("User's name: ");
+                    String searchName = scanner.nextLine();
+
+                    List<User> userNameResults = library.searchUsersByName(searchName);
+                    for (User user : userNameResults) {
+                        System.out.println(user);
+                    }
+
                     break;
 
                 case "7":
+                    System.out.println("Must provide ISBN and user id to borrow book.");
+                    System.out.println("ISBN: ");
+                    String borrowIsbn = scanner.nextLine();
+
+                    System.out.println("user id: ");
+                    String borrowUserId = scanner.nextLine();
+
+                    library.borrowBook(borrowIsbn, borrowUserId);
+
+                    System.out.println("Book has been borrowed!");
                     break;
 
                 case "8":
+                    System.out.println("Please provide the ISBN to return book.");
+                    System.out.println("ISBN: ");
+                    String returnIsbn = scanner.nextLine();
+
+                    library.returnBook(returnIsbn);
+                    System.out.println("Book has been returned!");
                     break;
 
                 case "9":
@@ -85,9 +116,7 @@ public class Main {
                     break;
             }
         }
-
-        
-        
+                
    }
 
 }
