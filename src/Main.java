@@ -2,46 +2,88 @@ import models.Book;
 import models.User;
 import services.Library;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         // Create a new Library instance
         Library library = new Library();
 
-        // Create some books
-        Book book1 = new Book("The Hobbit", "J.R.R Tolkien", "1234567890");
-        Book book2 = new Book("Farenheit 451", "Ray Bradbury", "0987654321");
-
-        // Create some users
-        User user1 = new User("Kevin Baxter", "11332", "Student");
-        User user2 = new User("Alayna Vera-Gonzalez", "21134", "Librarian");
-
-        // Add books to the Library
-        library.addBook(book1);
-        library.addBook(book2);
-
-        // Add users to the Library
-        library.addUser(user1);
-        library.addUser(user2);
-
-        // List books
-        List<Book> allBooks =library.getAllBooks();
+        // Init scanner
+        Scanner scanner = new Scanner(System.in);
         
-        System.out.println("Library Book List:");
-        int index = 1;
-        for (Book book : allBooks) {
-            System.out.println(index + ". " + book);
-            index++;
-        }
+        boolean exitLoop = false;
 
-        //List all Users
-        List<User> allUsers = library.getAllUsers();
+        while(!exitLoop) {
+            System.out.println("1. Add Book\n" +
+                               "2. Add User\n" +
+                               "3. List All Books\n" +
+                               "4. List All Users\n" +
+                               "5. Search Books by Title\n" +
+                               "6. Search Users by Name\n" +
+                               "7. Borrow Book\n" +
+                               "8. Return Book\n" +
+                               "9. Exit");
 
-        System.out.println("Library User List:");
-        index = 1;
-        for (User user : allUsers) {
-            System.out.println(index + ". " + user);
-            index++;
+            String ans = scanner.nextLine();
+
+            switch (ans) {
+                case "1":
+                    System.out.println("Title: ");
+                    String title = scanner.nextLine();
+
+                    System.out.println("Author: ");
+                    String author = scanner.nextLine();
+
+                    System.out.println("ISBN: ");
+                    String isbn = scanner.nextLine();
+
+                    Book userBook = new Book(title, author, isbn);
+                    library.addBook(userBook);
+
+                    System.out.println("Book successfully added!");
+                    break;
+
+                case "2":
+                    System.out.println("Name: ");
+                    String userName = scanner.nextLine();
+
+                    System.out.println("ID: ");
+                    String userId = scanner.nextLine();
+
+                    System.out.println("Type: ");
+                    String userType = scanner.nextLine();
+
+                    User newUser = new User(userName, userId, userType);
+                    library.addUser(newUser);
+
+                    System.out.println("New user added!");
+                    break;
+
+                case "3":
+                    System.out.println(library.getAllBooks());
+                    break;
+
+                case "4":
+                System.out.println(library.getAllUsers());
+                    break;
+                
+                case "5":
+                    break;
+
+                case "6":
+                    break;
+
+                case "7":
+                    break;
+
+                case "8":
+                    break;
+
+                case "9":
+                    exitLoop = true;
+                    break;
+            }
         }
 
         
