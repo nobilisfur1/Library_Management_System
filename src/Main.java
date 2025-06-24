@@ -15,6 +15,7 @@ public class Main {
         boolean exitLoop = false;
 
         while(!exitLoop) {
+            System.out.println("---------- Menu ----------");
             System.out.println("1. Add Book\n" +
                                "2. Add User\n" +
                                "3. List All Books\n" +
@@ -24,35 +25,35 @@ public class Main {
                                "7. Borrow Book\n" +
                                "8. Return Book\n" +
                                "9. Exit");
+            System.out.println("--------------------------");
+            System.out.print("Input: ");
 
-            String ans = scanner.nextLine();
+            String ans = scanner.nextLine().trim();
 
             switch (ans) {
                 case "1":
-                    System.out.println("Title: ");
-                    String title = scanner.nextLine();
+                    System.out.print("Title: ");
+                    String title = scanner.nextLine().trim();
                     
-                    System.out.println("Author: ");
-                    String author = scanner.nextLine();
+                    System.out.print("Author: ");
+                    String author = scanner.nextLine().trim();
 
-                    System.out.println("ISBN: ");
-                    String isbn = scanner.nextLine();
+                    System.out.print("ISBN: ");
+                    String isbn = scanner.nextLine().trim();
 
                     Book userBook = new Book(title, author, isbn);
                     library.addBook(userBook);
-                    
-                    System.out.println("Book successfully added!");
                     break;
 
                 case "2":
-                    System.out.println("Name: ");
-                    String userName = scanner.nextLine();
+                    System.out.print("Name: ");
+                    String userName = scanner.nextLine().trim();
 
-                    System.out.println("ID: ");
-                    String userId = scanner.nextLine();
+                    System.out.print("ID: ");
+                    String userId = scanner.nextLine().trim();
 
-                    System.out.println("Type: ");
-                    String userType = scanner.nextLine();
+                    System.out.print("Type: ");
+                    String userType = scanner.nextLine().trim();
 
                     User newUser = new User(userName, userId, userType);
                     library.addUser(newUser);
@@ -60,60 +61,76 @@ public class Main {
                     break;
 
                 case "3":
-                    System.out.println(library.getAllBooks());
+                    List<Book> bookList = library.getAllBooks();
+
+                    for (int i = 0; i < bookList.size(); i++) {
+                        System.out.println((i + 1) + ". " + bookList.get(i));
+                    }
+
                     break;
 
                 case "4":
-                System.out.println(library.getAllUsers());
+                    List<User> userList = library.getAllUsers();
+
+                    for (int i = 0; i < userList.size(); i++) {
+                        System.out.println((i + 1) + ". " + userList.get(i));
+                    }
+
                     break;
                 
                 case "5":
-                    System.out.println("Title: ");
-                    String searchTitle = scanner.nextLine();
+                    System.out.print("Title: ");
+                    String searchTitle = scanner.nextLine().trim();
 
                     List<Book> titleResults = library.searchBooksByTitle(searchTitle);
                     for (Book book : titleResults) {
-                        System.out.println(book);
+                        System.out.print(book);
                     }
 
                     break;
 
                 case "6":
-                    System.out.println("User's name: ");
-                    String searchName = scanner.nextLine();
+                    System.out.print("User's name: ");
+                    String searchName = scanner.nextLine().trim();
 
                     List<User> userNameResults = library.searchUsersByName(searchName);
                     for (User user : userNameResults) {
-                        System.out.println(user);
+                        System.out.print(user);
                     }
 
                     break;
 
                 case "7":
                     System.out.println("Must provide ISBN and user id to borrow book.");
-                    System.out.println("ISBN: ");
-                    String borrowIsbn = scanner.nextLine();
+                    System.out.print("ISBN: ");
+                    String borrowIsbn = scanner.nextLine().trim();
 
-                    System.out.println("user id: ");
-                    String borrowUserId = scanner.nextLine();
+                    System.out.print("User id: ");
+                    String borrowUserId = scanner.nextLine().trim();
 
                     library.borrowBook(borrowIsbn, borrowUserId);
-
-                    System.out.println("Book has been borrowed!");
                     break;
 
                 case "8":
-                    System.out.println("Please provide the ISBN to return book.");
-                    System.out.println("ISBN: ");
-                    String returnIsbn = scanner.nextLine();
+                    System.out.println("Please provide the ISBN and your ID to return book.");
+                    System.out.print("ISBN: ");
+                    String returnIsbn = scanner.nextLine().trim();
 
-                    library.returnBook(returnIsbn);
-                    System.out.println("Book has been returned!");
+                    System.out.print("User id: ");
+                    String returnId = scanner.nextLine().trim();
+
+                    library.returnBook(returnIsbn, returnId);
                     break;
 
                 case "9":
                     exitLoop = true;
                     break;
+
+            }
+
+            if (!exitLoop) {
+                System.out.println("Press Enter to continue...");
+                scanner.nextLine();
             }
 
         }

@@ -20,6 +20,7 @@ public class Book {
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
     public String getIsbn() { return isbn; }
+    public User getBorrowedBy() { return borrowedBy; }
     public boolean isAvailable() {
         if(borrowedBy == null) {
             return true;
@@ -28,6 +29,7 @@ public class Book {
             return false;
         }
     }
+
     public void borrowBook(User user) { borrowedBy = user; }
     
     public void returnBook() { borrowedBy = null; }

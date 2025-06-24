@@ -18,17 +18,59 @@ public class Library {
         Book book = findBookByIsbn(isbn);
         User user = findUserByUserId(userId);
 
+        if (book == null && user == null) {
+            System.out.println("Book nor user exist.");
+            return;
+        }
+
+        if (book == null) {
+            System.out.println("Book doesn't exist.");
+            return;
+        }
+
+        if (user == null) {
+            System.out.println("User doesn't exist.");
+            return;
+        }
+
+        if (book.isAvailable() != true) {
+            System.out.println("Book is not available.");
+            return;
+        }
+
         book.borrowBook(user);
+        System.out.println("Book has been borrowed!");
     }
 
-    public void returnBook(String isbn) {
+    public void returnBook(String isbn, String id) {
         Book book = findBookByIsbn(isbn);
+        User borrower = book.getBorrowedBy();
+        User userId = findUserByUserId(id);
+        
+        if (book == null) {
+            System.out.println("Book does not exist.");
+            return;
+        }
+
+        if (!borrower.equals(userId)) {
+            System.out.println("User id given did not borrow book.");
+            return;
+        }
 
         book.returnBook();
+        System.out.println("Book has been returned!");
     }
 
     public void addBook(Book book) {
-        books.add(book);
+        if (findBookByIsbn(book.getIsbn()) == null) {
+            books.add(book);
+            System.out.println("book successfully added!");
+            return;
+        }
+
+        System.out.println("Book already exists.");
+
+
     }
 
     public List<Book> getAllBooks() {
@@ -53,7 +95,7 @@ public class Library {
     
     public Book findBookByIsbn(String isbn) {
         for (Book book : books) {
-            if (book.getIsbn() == isbn){
+            if (book.getIsbn().equals(isbn)){
                 return book;
             }
         }
