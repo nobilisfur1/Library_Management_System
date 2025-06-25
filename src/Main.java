@@ -131,6 +131,7 @@ public class Main {
                     break;
 
                 case "9":
+                    System.out.println("Have a nice day!");
                     exitLoop = true;
                     break;
 
