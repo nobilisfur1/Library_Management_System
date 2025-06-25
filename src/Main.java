@@ -33,13 +33,13 @@ public class Main {
             switch (ans) {
                 case "1":
                     System.out.print("Title: ");
-                    String title = scanner.nextLine().trim();
+                    String title = inputCheck(scanner.nextLine());
                     
                     System.out.print("Author: ");
-                    String author = scanner.nextLine().trim();
+                    String author = inputCheck(scanner.nextLine());
 
                     System.out.print("ISBN: ");
-                    String isbn = scanner.nextLine().trim();
+                    String isbn = inputCheck(scanner.nextLine());
 
                     Book userBook = new Book(title, author, isbn);
                     library.addBook(userBook);
@@ -47,13 +47,13 @@ public class Main {
 
                 case "2":
                     System.out.print("Name: ");
-                    String userName = scanner.nextLine().trim();
+                    String userName = inputCheck(scanner.nextLine());
 
                     System.out.print("ID: ");
-                    String userId = scanner.nextLine().trim();
+                    String userId = inputCheck(scanner.nextLine());
 
                     System.out.print("Type: ");
-                    String userType = scanner.nextLine().trim();
+                    String userType = inputCheck(scanner.nextLine());
 
                     User newUser = new User(userName, userId, userType);
                     library.addUser(newUser);
@@ -80,7 +80,7 @@ public class Main {
                 
                 case "5":
                     System.out.print("Title: ");
-                    String searchTitle = scanner.nextLine().trim();
+                    String searchTitle = inputCheck(scanner.nextLine());
 
                     List<Book> titleResults = library.searchBooksByTitle(searchTitle);
                     for (Book book : titleResults) {
@@ -91,7 +91,7 @@ public class Main {
 
                 case "6":
                     System.out.print("User's name: ");
-                    String searchName = scanner.nextLine().trim();
+                    String searchName = inputCheck(scanner.nextLine());
 
                     List<User> userNameResults = library.searchUsersByName(searchName);
                     for (User user : userNameResults) {
@@ -103,10 +103,10 @@ public class Main {
                 case "7":
                     System.out.println("Must provide ISBN and user id to borrow book.");
                     System.out.print("ISBN: ");
-                    String borrowIsbn = scanner.nextLine().trim();
+                    String borrowIsbn = inputCheck(scanner.nextLine());
 
                     System.out.print("User id: ");
-                    String borrowUserId = scanner.nextLine().trim();
+                    String borrowUserId = inputCheck(scanner.nextLine());
 
                     library.borrowBook(borrowIsbn, borrowUserId);
                     break;
@@ -114,10 +114,10 @@ public class Main {
                 case "8":
                     System.out.println("Please provide the ISBN and your ID to return book.");
                     System.out.print("ISBN: ");
-                    String returnIsbn = scanner.nextLine().trim();
+                    String returnIsbn = inputCheck(scanner.nextLine());
 
                     System.out.print("User id: ");
-                    String returnId = scanner.nextLine().trim();
+                    String returnId = inputCheck(scanner.nextLine());
 
                     library.returnBook(returnIsbn, returnId);
                     break;
@@ -134,12 +134,13 @@ public class Main {
             }
 
         }
+        scanner.close();
                 
    }
 
     public static String inputCheck(String input) {
         Scanner scanner = new Scanner(System.in);
-        input = input.trim()
+        input = input.trim();
         while (input == "") {
             System.out.println("Input can not be blank.");
             System.out.print("Enter: ");
