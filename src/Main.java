@@ -137,4 +137,16 @@ public class Main {
                 
    }
 
+    public static String inputCheck(String input) {
+        Scanner scanner = new Scanner(System.in);
+        input = input.trim()
+        while (input == "") {
+            System.out.println("Input can not be blank.");
+            System.out.print("Enter: ");
+            input = scanner.nextLine().trim();
+            
+        }
+        
+        return input;
+    }
 }
