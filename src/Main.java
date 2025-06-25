@@ -78,7 +78,7 @@ public class Main {
                         for (int j = 0; j < borrowList.size(); j++) {
                             if (borrowList.get(j).getBorrowedBy() != null) {
                                 if (borrowList.get(j).getBorrowedBy().getName().equals(userList.get(i).getName())) {
-                                    System.out.println("* " + borrowList.get(j));
+                                    System.out.println("* " + borrowList.get(j).getTitle() + " by " + borrowList.get(j).getAuthor() + " (ISBN: " + borrowList.get(j).getIsbn() + ")"); 
                                 }
                             }
                         }
