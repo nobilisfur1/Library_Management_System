@@ -44,13 +44,18 @@ public class Library {
 
     public void returnBook(String isbn, String id) {
         Book book = findBookByIsbn(isbn);
-        User borrower = book.getBorrowedBy();
         User userId = findUserByUserId(id);
         
         if (book == null) {
             System.out.println("Book does not exist.");
             return;
         }
+        if (userId == null) {
+            System.out.println("Book does not exist.");
+            return;
+        }
+        
+        User borrower = book.getBorrowedBy();
 
         if (!borrower.equals(userId)) {
             System.out.println("User id given did not borrow book.");
@@ -136,16 +141,6 @@ public class Library {
         return results;
     }
 
-    public Book searchBooksByIsbn(String isbn) {
-        for (Book book : books) {
-            if (book.getIsbn().equals(isbn)) {
-                return book;
-            }
-        }
-
-        return null;
-    }
-
     public ArrayList<User> searchUsersByName(String name) {
         ArrayList<User> results = new ArrayList<>();
 
@@ -158,13 +153,4 @@ public class Library {
         return results;
     }
 
-    public User searchUsersById(String id) {
-        for (User user : users) {
-            if (user.getUserID().equals(id)) {
-                return user;
-            }
-        }
-
-        return null;
-    }
 }
