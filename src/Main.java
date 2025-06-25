@@ -71,9 +71,17 @@ public class Main {
 
                 case "4":
                     List<User> userList = library.getAllUsers();
+                    List<Book> borrowList = library.getAllBooks();
 
                     for (int i = 0; i < userList.size(); i++) {
                         System.out.println((i + 1) + ". " + userList.get(i));
+                        for (int j = 0; j < borrowList.size(); j++) {
+                            if (borrowList.get(j).getBorrowedBy() != null) {
+                                if (borrowList.get(j).getBorrowedBy().getName().equals(userList.get(i).getName())) {
+                                    System.out.println("* " + borrowList.get(j));
+                                }
+                            }
+                        }
                     }
 
                     break;
