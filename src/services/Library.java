@@ -162,6 +162,7 @@ public class Library {
         return entry.replace("-","*-").replace(",", "-");
     }
 
+    // Save books to books.csv
     public void saveAllBooks() {
         try (Writer bookWriter = new FileWriter("data/csv/books.csv")) {
             for (Book book : books) {
@@ -178,6 +179,7 @@ public class Library {
 
     }
 
+    // Load books from books.csv
     public void loadBooks() {
         String csvFilePath = "data/csv/books.csv";
 
@@ -192,17 +194,25 @@ public class Library {
                     data[i] = data[i].replace("-",",").replace("*,","-");
                 }
 
-                if (data.length > 2) {
+                if (data.length == 3 || data.length == 4) {
                     String title = data[0];
                     String author = data[1];
                     String isbn = data[2];
 
-                    if (data.length > 3) {
-                        String borrowId = data[3];
+                    books.add(new Book(title, author, isbn));
+
+                    if (data.length == 4) {
+                        borrowBook(isbn, data[3]);
                     }
 
-                books.add(new Book(title, author, isbn));
-                }
+                    }
+
+                    if (data.length < 3) {
+                        System.out.println("Ran into a short line in books.csv. Skipping...");
+                    }
+                    else if (data.length > 4) {
+                        System.out.println("Ran into a long line in books.csv. Skipping...");
+                    }
 
             }
 
@@ -213,4 +223,49 @@ public class Library {
 
     }
 
+    public void saveAllUsers() {
+        try (Writer userWriter = new FileWriter("data/csv/users.csv")) {
+            for (User user : users) {
+                userWriter.write(cleanComma(user.getName()) + "," + cleanComma(user.getUserID()) + "," + cleanComma(user.getType()) + "\n");
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Issue writing users :'( " + e.getMessage());
+        }
+    }
+
+    public void loadUsers() {
+        String csvFilePath = "data/csv/users.csv";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            String[] data;
+
+            while ((line = br.readLine()) != null) {
+                data = line.split(",");
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = data[i].replace("-",",").replace("*,","-");
+                }
+
+                if (data.length == 3) {
+                    String name = data[0];
+                    String userId = data[1];
+                    String type = data[2];
+
+                    users.add(new User(name, userId, type));
+
+                    if (data.length > 3) {
+                        System.out.println("Ran into a long line in users.csv. Skipping line...");
+                    }
+                    if (data.length < 3) {
+                        System.out.println("Ran into a short line in user.csv. Skipping line...");
+                    }
+                }
+            }
+            
+        }
+        catch (IOException e) {
+            System.out.println("Issue reading users :'( " + e.getMessage());
+        }
+    }
 }
