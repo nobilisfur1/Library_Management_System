@@ -4,6 +4,11 @@ import models.Book;
 import models.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 public class Library {
     private ArrayList<Book> books;
@@ -151,6 +156,49 @@ public class Library {
         }
 
         return results;
+    }
+
+    public String cleanComma(String entry) {
+        return entry.replace(",", "-");
+    }
+
+    public void saveAllBooks() {
+        try (Writer bookWriter = new FileWriter("data/csv/books.csv")) {
+            for (Book book : books) {
+                bookWriter.write(cleanComma(book.getTitle()) + "," + cleanComma(book.getAuthor()) + "," + cleanComma(book.getIsbn()));
+                if (book.getBorrowedBy() != null) {
+                    bookWriter.write("," + cleanComma(book.getBorrowedBy().getUserID()));
+                }
+                bookWriter.write("\n");
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Issue writing books :'( " + e.getMessage());
+        }
+
+    }
+
+    public void loadBooks() {
+        String csvFilePath = "data/csv/books.csv";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            String[] data;
+
+            while ((line = br.readLine()) != null) {
+                data = line.split(",");
+                String title = data[0];
+                String author = data[1];
+                String isbn = data[2];
+
+                books.add(new Book(title, author, isbn));
+            }
+
+        }
+        catch (IOException e) {
+            System.out.println("Issue reading books :'( " + e.getMessage());
+        }
+
     }
 
 }

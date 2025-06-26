@@ -9,6 +9,8 @@ public class Main {
         // Create a new Library instance
         Library library = new Library();
 
+        library.loadBooks();
+
         // Init scanner
         Scanner scanner = new Scanner(System.in);
         
@@ -131,6 +133,7 @@ public class Main {
                     break;
 
                 case "9":
+                    library.saveAllBooks();
                     System.out.println("Have a nice day!");
                     exitLoop = true;
                     break;
