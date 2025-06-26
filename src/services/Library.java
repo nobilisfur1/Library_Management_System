@@ -186,6 +186,7 @@ public class Library {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             String[] data;
+            int bookCount = 0;
 
             while ((line = br.readLine()) != null) {
                 data = line.split(",");
@@ -195,14 +196,14 @@ public class Library {
                 }
 
                 if (data.length == 3 || data.length == 4) {
-                    String title = data[0];
-                    String author = data[1];
-                    String isbn = data[2];
+                    String title = data[0].trim();
+                    String author = data[1].trim();
+                    String isbn = data[2].trim();
 
                     books.add(new Book(title, author, isbn));
 
                     if (data.length == 4) {
-                        borrowBook(isbn, data[3]);
+                        borrowBook(isbn, data[3].trim());
                     }
 
                     }
@@ -214,7 +215,9 @@ public class Library {
                         System.out.println("Ran into a long line in books.csv. Skipping...");
                     }
 
+                bookCount++;
             }
+            System.out.println(bookCount + " books loaded!");
 
         }
         catch (IOException e) {
@@ -240,6 +243,7 @@ public class Library {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             String[] data;
+            int userCount = 0;
 
             while ((line = br.readLine()) != null) {
                 data = line.split(",");
@@ -248,9 +252,9 @@ public class Library {
                 }
 
                 if (data.length == 3) {
-                    String name = data[0];
-                    String userId = data[1];
-                    String type = data[2];
+                    String name = data[0].trim();
+                    String userId = data[1].trim();
+                    String type = data[2].trim();
 
                     users.add(new User(name, userId, type));
 
@@ -261,7 +265,9 @@ public class Library {
                         System.out.println("Ran into a short line in user.csv. Skipping line...");
                     }
                 }
+                userCount++;
             }
+            System.out.println(userCount + " users added!");
             
         }
         catch (IOException e) {
