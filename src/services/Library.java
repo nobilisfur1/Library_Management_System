@@ -159,7 +159,7 @@ public class Library {
     }
 
     public String cleanComma(String entry) {
-        return entry.replace(",", "-");
+        return entry.replace("-","*-").replace(",", "-");
     }
 
     public void saveAllBooks() {
@@ -187,11 +187,23 @@ public class Library {
 
             while ((line = br.readLine()) != null) {
                 data = line.split(",");
-                String title = data[0];
-                String author = data[1];
-                String isbn = data[2];
+                
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = data[i].replace("-",",").replace("*,","-");
+                }
+
+                if (data.length > 2) {
+                    String title = data[0];
+                    String author = data[1];
+                    String isbn = data[2];
+
+                    if (data.length > 3) {
+                        String borrowId = data[3];
+                    }
 
                 books.add(new Book(title, author, isbn));
+                }
+
             }
 
         }
