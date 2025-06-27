@@ -1,6 +1,7 @@
 import models.Book;
 import models.User;
 import services.Library;
+import services.DatabaseManager;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class Main {
 
         library.loadUsers();
         library.loadBooks();
+        DatabaseManager.getInstance();
 
         // Init scanner
         Scanner scanner = new Scanner(System.in);
