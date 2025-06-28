@@ -10,9 +10,13 @@ public class Main {
         // Create a new Library instance
         Library library = new Library();
 
-        library.loadUsers();
-        library.loadBooks();
-        DatabaseManager.getInstance();
+        //Loading from csv files.
+        //library.loadUsers()
+        //library.loadBooks()
+        
+
+        DatabaseManager dbm = DatabaseManager.getInstance();
+        dbm.createTables();
 
         // Init scanner
         Scanner scanner = new Scanner(System.in);
@@ -61,7 +65,7 @@ public class Main {
                     String userType = inputCheck(scanner.nextLine());
 
                     User newUser = new User(userName, userId, userType);
-                    library.addUser(newUser);
+                    dbm.addUser(newUser);
 
                     break;
 

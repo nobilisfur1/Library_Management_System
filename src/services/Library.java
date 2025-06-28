@@ -267,7 +267,7 @@ public class Library {
                 }
                 userCount++;
             }
-            System.out.println(userCount + " users added!");
+            System.out.println(userCount + " users loaded!");
             
         }
         catch (IOException e) {
