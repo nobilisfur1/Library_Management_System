@@ -51,7 +51,7 @@ public class Main {
                     String isbn = inputCheck(scanner.nextLine());
 
                     Book userBook = new Book(title, author, isbn);
-                    library.addBook(userBook);
+                    dbm.addBook(userBook);
                     break;
 
                 case "2":
@@ -125,7 +125,9 @@ public class Main {
                     System.out.print("User id: ");
                     String borrowUserId = inputCheck(scanner.nextLine());
 
-                    library.borrowBook(borrowIsbn, borrowUserId);
+                    dbm.borrowBook(borrowUserId, borrowIsbn);
+
+
                     break;
 
                 case "8":
