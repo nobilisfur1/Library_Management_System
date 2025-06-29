@@ -1,3 +1,4 @@
 *.class
 *.bash
 data/library.db
+run.sh
