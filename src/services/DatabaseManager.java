@@ -185,4 +185,58 @@ public class DatabaseManager {
 
     }
 
+    public void returnBook(String userId, String isbn) {
+        try {
+            connect.setAutoCommit(false);
+
+            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ?");
+            check.setString(1, isbn);
+            ResultSet borrowId = check.executeQuery();
+
+            if (!borrowId.next()) {
+                System.out.println("Book not found or not borrowed.");
+                return;
+            }
+
+            if (!borrowId.getString(1).trim().equals(userId)) {
+                System.out.println("Book borrowed by another user, borrowed by: " + borrowId.getString(1));
+                return;
+            }
+
+            connect.commit();
+
+        }
+        catch (SQLException e) {
+            try {
+                connect.rollback();
+            }
+            catch (SQLException r) {
+                System.out.println("Issue rolling back: " + r);
+            }
+
+            System.out.println("Issue finding or comparing borrower id: " + e);
+        }
+
+        try {
+            PreparedStatement stmt = connect.prepareStatement("UPDATE Books SET borrower_id = \"NULL\" WHERE isbn = ?");
+
+            stmt.setString(1, isbn);
+            stmt.executeUpdate();
+
+            connect.commit();
+
+        }
+        catch (SQLException e) {
+            try {
+                connect.rollback();
+            }
+            catch (SQLException r) {
+                System.out.println("Issue rolling back: " + r);
+            }
+
+            System.out.println("Issue returning book: " + e);
+        }
+
+    }
+
 }

@@ -138,7 +138,7 @@ public class Main {
                     System.out.print("User id: ");
                     String returnId = inputCheck(scanner.nextLine());
 
-                    library.returnBook(returnIsbn, returnId);
+                    dbm.returnBook(returnId, returnIsbn);
                     break;
 
                 case "9":
