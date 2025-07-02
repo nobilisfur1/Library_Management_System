@@ -218,7 +218,7 @@ public class DatabaseManager {
         }
 
         try {
-            PreparedStatement stmt = connect.prepareStatement("UPDATE Books SET borrower_id = \"NULL\" WHERE isbn = ?");
+            PreparedStatement stmt = connect.prepareStatement("UPDATE Books SET borrower_id = null WHERE isbn = ?");
 
             stmt.setString(1, isbn);
             stmt.executeUpdate();
