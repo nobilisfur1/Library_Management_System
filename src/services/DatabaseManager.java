@@ -244,6 +244,17 @@ public class DatabaseManager {
         try {
             connect.setAutoCommit(false);
 
+            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String isbn = rs.getString("isbn");
+                String borrowerId = rs.getString("borrower_id");
+
+                System.out.println(title + "\t\t" + author + "\t\t" + isbn + "\t\t" + borrowerId);
+                }
    
             connect.commit();
             
