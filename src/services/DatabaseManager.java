@@ -239,4 +239,25 @@ public class DatabaseManager {
 
     }
 
+    // Unfinished, working on a method to show the books table
+    public void showBooks() {
+        try {
+            connect.setAutoCommit(false);
+
+   
+            connect.commit();
+            
+        }
+        catch (SQLException e) {
+            try {
+                connect.rollback();
+            }
+            catch (SQLException r) {
+                System.out.println("Issue rolling back: " + r);
+            }
+            System.out.println("Issue showing books: " + e);
+        }
+
+    }
+
 }

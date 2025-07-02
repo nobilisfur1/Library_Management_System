@@ -70,12 +70,7 @@ public class Main {
                     break;
 
                 case "3":
-                    List<Book> bookList = library.getAllBooks();
-
-                    for (int i = 0; i < bookList.size(); i++) {
-                        System.out.println((i + 1) + ". " + bookList.get(i));
-                    }
-
+                    dbm.showBooks();
                     break;
 
                 case "4":
