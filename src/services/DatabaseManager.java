@@ -239,11 +239,8 @@ public class DatabaseManager {
 
     }
 
-    // Unfinished, working on a method to show the books table
     public void showBooks() {
         try {
-            connect.setAutoCommit(false);
-
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books");
             ResultSet rs = stmt.executeQuery();
 
@@ -253,20 +250,32 @@ public class DatabaseManager {
                 String isbn = rs.getString("isbn");
                 String borrowerId = rs.getString("borrower_id");
 
-                System.out.println(title + "\t\t" + author + "\t\t" + isbn + "\t\t" + borrowerId);
+                System.out.println(title + " | " + author + " | " + isbn + " | " + borrowerId);
                 }
    
-            connect.commit();
-            
         }
         catch (SQLException e) {
-            try {
-                connect.rollback();
-            }
-            catch (SQLException r) {
-                System.out.println("Issue rolling back: " + r);
-            }
             System.out.println("Issue showing books: " + e);
+        }
+
+    }
+
+    public void showUsers() {
+        try {
+            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Users");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString("user_id");
+                String name = rs.getString("name");
+                String type = rs.getString("type");
+
+                System.out.println(id + " | " + name + " | " + type);
+            }
+
+        }
+        catch (SQLException e) {
+            System.out.println("Issue showing Users: " + e);
         }
 
     }
