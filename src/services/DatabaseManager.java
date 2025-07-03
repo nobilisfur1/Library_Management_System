@@ -83,17 +83,14 @@ public class DatabaseManager {
             pstmt.execute();
             
             connect.commit();
-
         }
-        catch (SQLException e) {
-            
+        catch (SQLException e) {           
             try {
                 connect.rollback();
             }
             catch (SQLException r) {
                 System.out.println("Issue rolling back: " + r);
             }
-
             System.out.println("Issue adding to user table: " + e);
         }
     }
@@ -110,9 +107,7 @@ public class DatabaseManager {
 
             pstmt.execute();
 
-            connect.commit();
-            
-
+            connect.commit();            
         }
         catch (SQLException e) {
             
@@ -121,12 +116,9 @@ public class DatabaseManager {
             }
             catch (SQLException r) {
                 System.out.println("Issue rolling back: " + r);
-            }
-            
+            }            
             System.out.println("Issue adding to user table: " + e);
-
         }
-
     }
 
     public void borrowBook(String userid, String isbn) {
@@ -177,12 +169,8 @@ public class DatabaseManager {
             catch (SQLException r) {
                 System.out.println("Issue rolling back: " + r);
             }
-
             System.out.println("Issue setting borrower: " + e);
-
         }
-        
-
     }
 
     public void returnBook(String userId, String isbn) {
@@ -280,13 +268,14 @@ public class DatabaseManager {
 
     }
 
-    // WIP..Find book by book title.
+    // Find book by book title.
     public void findBook(String book) {
         try {
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books WHERE title LIKE ?");
             stmt.setString(1, "%" + book + "%");
 
             ResultSet rs = stmt.executeQuery();
+            
             // Want to print a statement if no book is found.
             /*
             if (!rs.next()) {
@@ -307,6 +296,27 @@ public class DatabaseManager {
         catch (SQLException e) {
            System.out.println("Issue finding book: " + e); 
         }
+    }
+
+    public void findUser(String user) {
+        try {
+            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Users WHERE name LIKE ?");
+            stmt.setString(1, "%" + user + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString("user_id");
+                String name = rs.getString("name");
+                String type = rs.getString("type");
+
+                System.out.println(id + " | " + name + " | " + type);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Issue finding user: " + e);
+        }
+
     }
 
 }

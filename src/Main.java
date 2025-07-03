@@ -88,11 +88,7 @@ public class Main {
                     System.out.print("User's name: ");
                     String searchName = inputCheck(scanner.nextLine());
 
-                    List<User> userNameResults = library.searchUsersByName(searchName);
-                    for (User user : userNameResults) {
-                        System.out.print(user);
-                    }
-
+                    dbm.findUser(searchName);
                     break;
 
                 case "7":
