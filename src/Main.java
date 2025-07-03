@@ -78,14 +78,10 @@ public class Main {
                     break;
                 
                 case "5":
-                    System.out.print("Title: ");
-                    String searchTitle = inputCheck(scanner.nextLine());
+                    System.out.print("Book title: ");
+                    String searchBook = inputCheck(scanner.nextLine());
 
-                    List<Book> titleResults = library.searchBooksByTitle(searchTitle);
-                    for (Book book : titleResults) {
-                        System.out.print(book);
-                    }
-
+                    dbm.findBook(searchBook);
                     break;
 
                 case "6":

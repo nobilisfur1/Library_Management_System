@@ -280,4 +280,33 @@ public class DatabaseManager {
 
     }
 
+    // WIP..Find book by book title.
+    public void findBook(String book) {
+        try {
+            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books WHERE title LIKE ?");
+            stmt.setString(1, "%" + book + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            // Want to print a statement if no book is found.
+            /*
+            if (!rs.next()) {
+                System.out.println("Book not found.");
+            }
+            */
+
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String isbn = rs.getString("isbn");
+                String borrowerId = rs.getString("borrower_id");
+
+                System.out.println(title + " | " + author + " | " + isbn + " | " + borrowerId);
+            }
+
+        }
+        catch (SQLException e) {
+           System.out.println("Issue finding book: " + e); 
+        }
+    }
+
 }
