@@ -271,8 +271,8 @@ public class DatabaseManager {
     // Find book by book title.
     public void findBook(String book) {
         try {
-            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books WHERE title LIKE ?");
-            stmt.setString(1, "%" + book + "%");
+            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books WHERE title LIKE ? COLLATE NOCASE");
+            stmt.setString(1, "%" + book.trim() + "%");
 
             ResultSet rs = stmt.executeQuery();
             
@@ -300,8 +300,8 @@ public class DatabaseManager {
 
     public void findUser(String user) {
         try {
-            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Users WHERE name LIKE ?");
-            stmt.setString(1, "%" + user + "%");
+            PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Users WHERE name LIKE ? COLLATE NOCASE");
+            stmt.setString(1, "%" + user.trim() + "%");
 
             ResultSet rs = stmt.executeQuery();
 
