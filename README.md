@@ -25,7 +25,7 @@ A console-based Library Management System written in Java using SQLite and Maven
 - Java 17+
 - Maven installed
 
-### Clone and Build then Run
+### Clone and Build
 
 ```bash
 git clone https://github.com/nobilisfur1/Library_Management_System.git
