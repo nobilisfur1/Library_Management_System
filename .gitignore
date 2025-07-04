@@ -1,4 +1,26 @@
+# Maven directory
+/target/
+
+# scripts
+*.sh~
+
+# logs
+*.log
+
+# java backups
 *.class
-*.bash
+
+# IDEs
+*.iml
+.idea/
+*.classpath
+*.project
+*.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# other
+libs/
 data/library.db
-run.sh
