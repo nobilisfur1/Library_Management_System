@@ -31,7 +31,11 @@ A console-based Library Management System written in Java using SQLite and Maven
 git clone https://github.com/nobilisfur1/Library_Management_System.git
 cd Library_Management_System
 mvn compile
+```
 
+### Run
+
+```
 mvn exec:java -Dexec.mainClass="Main"
 ```
 
