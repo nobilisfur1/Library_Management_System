@@ -2,6 +2,7 @@
 /target/
 
 # scripts
+run.sh
 *.sh~
 
 # logs
