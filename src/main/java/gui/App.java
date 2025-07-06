@@ -161,7 +161,7 @@ public class App extends Application {
             // Search users button
             searchUsers.setOnAction(e -> {
                 center.getChildren().clear();
-                center.getChildren().add(new Label("Name: "));
+                center.getChildren().add(new Label("Name:"));
                 TextArea nameField = new TextArea();
                 nameField.setPrefRowCount(1);
                 Button searchName = new Button("Search");
@@ -175,8 +175,43 @@ public class App extends Application {
             });
 
             // Borrow book button
+            borrowBook.setOnAction(e -> {
+                center.getChildren().clear();
 
+                center.getChildren().add(new Label("User id:"));
+                TextArea idField = new TextArea();
+                idField.setPrefRowCount(1);
+                center.getChildren().add(idField);
 
+                center.getChildren().add(new Label("ISBN:"));
+                TextArea isbnField = new TextArea();
+                isbnField.setPrefRowCount(1);
+                center.getChildren().add(isbnField);
+
+                Button borrowButton = new Button("Borrow");
+                center.getChildren().add(borrowButton);
+                borrowButton.setOnAction(r -> {
+                    String userId = idField.getText();
+                    String isbn = isbnField.getText();
+
+                    if (dbm.borrowBook(userId, isbn)) {
+                        TextArea success = new TextArea("Successfully borrowed!");
+                        success.setPrefRowCount(1);
+                        center.getChildren().clear();
+                        center.getChildren().add(success);
+                    }
+                    else {
+                        TextArea failure = new TextArea("Book borrow failed...");
+                        failure.setPrefRowCount(1);
+                        center.getChildren().clear();
+                        center.getChildren().add(failure);
+                    }
+                });
+
+            });
+
+            // Return book button
+            
             // Making a scene
             Scene scene = new Scene(borderPane, 800, 600);
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());

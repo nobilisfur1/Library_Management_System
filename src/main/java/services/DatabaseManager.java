@@ -131,11 +131,11 @@ public class DatabaseManager {
         }
     }
 
-    public void borrowBook(String userid, String isbn) {
+    public Boolean borrowBook(String userid, String isbn) {
         try {
             connect.setAutoCommit(false);
 
-            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ?");
+            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ? AND borrower_id = null");
 
             check.setString(1, isbn);
             ResultSet borrowId = check.executeQuery();
@@ -147,7 +147,7 @@ public class DatabaseManager {
             if (!borrowId.next()) {
                 System.out.println(borrowId.getString(1));
                 System.out.println("Book already borrowed.");
-                return;
+                return false;
             }
 
         }
@@ -159,6 +159,7 @@ public class DatabaseManager {
                 System.out.println("Issue rolling back: " + r);
             }
             System.out.println("Issue checking borrowed_by: " + e);
+            return false;
         }
 
         try {
@@ -170,6 +171,7 @@ public class DatabaseManager {
 
             stmt.executeUpdate();
             connect.commit();
+            return true;
 
         }
         catch (SQLException e) {
@@ -180,6 +182,7 @@ public class DatabaseManager {
                 System.out.println("Issue rolling back: " + r);
             }
             System.out.println("Issue setting borrower: " + e);
+            return false;
         }
     }
 
