@@ -56,6 +56,12 @@ public class App extends Application {
             borderPane.setCenter(center);
 
             // button actions
+            showUsers.setOnAction(e -> {
+                TextArea textArea = new TextArea(dbm.showUsers());
+                center.getChildren().clear();
+                center.getChildren().add(textArea);
+            });
+
             showBooks.setOnAction(e -> {
                 TextArea textArea = new TextArea(dbm.showBooks());
                 center.getChildren().clear();

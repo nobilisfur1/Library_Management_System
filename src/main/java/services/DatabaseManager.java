@@ -251,22 +251,25 @@ public class DatabaseManager {
 
     }
 
-    public void showUsers() {
+    public String showUsers() {
         try {
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Users");
             ResultSet rs = stmt.executeQuery();
+            String result = "";
 
             while (rs.next()) {
                 String id = rs.getString("user_id");
                 String name = rs.getString("name");
                 String type = rs.getString("type");
 
-                System.out.println(id + " | " + name + " | " + type);
+                result = result.concat(id + " | " + name + " | " + type + "\n");
             }
+            return result;
 
         }
         catch (SQLException e) {
             System.out.println("Issue showing Users: " + e);
+            return "";
         }
 
     }
