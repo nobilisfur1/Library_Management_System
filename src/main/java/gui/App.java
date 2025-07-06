@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.TextField;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -56,16 +58,51 @@ public class App extends Application {
             borderPane.setCenter(center);
 
             // button actions
+
+            
+
+            // Show users button
             showUsers.setOnAction(e -> {
                 TextArea textArea = new TextArea(dbm.showUsers());
                 center.getChildren().clear();
                 center.getChildren().add(textArea);
             });
 
+            // Show books button
             showBooks.setOnAction(e -> {
                 TextArea textArea = new TextArea(dbm.showBooks());
                 center.getChildren().clear();
                 center.getChildren().add(textArea);
+            });
+
+            // Search books button
+            searchBooks.setOnAction(e -> {
+                center.getChildren().clear();
+                center.getChildren().add(new Label("Title: "));
+                TextArea titleField = new TextArea();
+                Button searchTitle = new Button("Search");
+                center.getChildren().addAll(titleField, searchTitle);
+                searchTitle.setOnAction(r -> {
+                    String bookTitle = titleField.getText();
+                    TextArea textArea = new TextArea(dbm.findBook(bookTitle));
+                    center.getChildren().clear();
+                    center.getChildren().add(textArea);
+                });
+            });
+
+            // Search users button
+            searchUsers.setOnAction(e -> {
+                center.getChildren().clear();
+                center.getChildren().add(new Label("Name: "));
+                TextArea nameField = new TextArea();
+                Button searchName = new Button("Search");
+                center.getChildren().addAll(nameField, searchName);
+                searchName.setOnAction(r -> {
+                    String userName = nameField.getText();
+                    TextArea textArea = new TextArea(dbm.findUser(userName));
+                    center.getChildren().clear();
+                    center.getChildren().add(textArea);
+                });
             });
 
             // Making a scene

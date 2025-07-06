@@ -1,6 +1,8 @@
 package services;
 import models.Book;
 import models.User;
+import java.util.List;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -271,16 +273,16 @@ public class DatabaseManager {
             System.out.println("Issue showing Users: " + e);
             return "";
         }
-
     }
-
+    
     // Find book by book title.
-    public void findBook(String book) {
+    public String findBook(String book) {
         try {
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books WHERE title LIKE ? COLLATE NOCASE");
             stmt.setString(1, "%" + book.trim() + "%");
 
             ResultSet rs = stmt.executeQuery();
+            String foundBooks = "";
             
             // Want to print a statement if no book is found.
             /*
@@ -295,32 +297,37 @@ public class DatabaseManager {
                 String isbn = rs.getString("isbn");
                 String borrowerId = rs.getString("borrower_id");
 
-                System.out.println(title + " | " + author + " | " + isbn + " | " + borrowerId);
+                foundBooks = foundBooks.concat(title + " | " + author + " | " + isbn + " | " + borrowerId + "\n");
             }
+            return foundBooks;
 
         }
         catch (SQLException e) {
            System.out.println("Issue finding book: " + e); 
+           return "";
         }
     }
 
-    public void findUser(String user) {
+    public String findUser(String user) {
         try {
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Users WHERE name LIKE ? COLLATE NOCASE");
             stmt.setString(1, "%" + user.trim() + "%");
 
             ResultSet rs = stmt.executeQuery();
+            String names = "";
 
             while (rs.next()) {
                 String id = rs.getString("user_id");
                 String name = rs.getString("name");
                 String type = rs.getString("type");
 
-                System.out.println(id + " | " + name + " | " + type);
+                names = names.concat(id + " | " + name + " | " + type + "\n");
             }
+            return names;
         }
         catch (SQLException e) {
             System.out.println("Issue finding user: " + e);
+            return "";
         }
 
     }
