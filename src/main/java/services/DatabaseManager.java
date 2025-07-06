@@ -70,7 +70,7 @@ public class DatabaseManager {
         }
     }
 
-    public void addUser(User user) {
+    public Boolean addUser(User user) {
         try {
             connect.setAutoCommit(false);
 
@@ -85,6 +85,8 @@ public class DatabaseManager {
             pstmt.execute();
             
             connect.commit();
+
+            return true;
         }
         catch (SQLException e) {           
             try {
@@ -94,10 +96,12 @@ public class DatabaseManager {
                 System.out.println("Issue rolling back: " + r);
             }
             System.out.println("Issue adding to user table: " + e);
+
+            return false;
         }
     }
 
-    public void addBook(Book book) {
+    public Boolean addBook(Book book) {
         try {
             connect.setAutoCommit(false);
 
@@ -110,6 +114,8 @@ public class DatabaseManager {
             pstmt.execute();
 
             connect.commit();            
+
+            return true;
         }
         catch (SQLException e) {
             
@@ -120,6 +126,8 @@ public class DatabaseManager {
                 System.out.println("Issue rolling back: " + r);
             }            
             System.out.println("Issue adding to user table: " + e);
+
+            return false;
         }
     }
 

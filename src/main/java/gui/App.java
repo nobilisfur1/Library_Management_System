@@ -1,11 +1,11 @@
 package gui;
 
-import java.awt.TextField;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import models.Book;
+import models.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
@@ -59,7 +59,74 @@ public class App extends Application {
 
             // button actions
 
+            // Add book button
+            addBook.setOnAction(e -> {
+                center.getChildren().clear();
+
+                center.getChildren().add(new Label("Title:"));
+                TextArea titleField = new TextArea();
+                titleField.setPrefRowCount(1);
+                center.getChildren().add(titleField);
+
+                center.getChildren().add(new Label("Author:"));
+                TextArea authorField = new TextArea();
+                authorField.setPrefRowCount(1);
+                center.getChildren().add(authorField);
+
+                center.getChildren().add(new Label("ISBN:"));
+                TextArea isbnField = new TextArea();
+                isbnField.setPrefRowCount(1);
+                center.getChildren().add(isbnField);
+
+                Button addBookButton = new Button("Add");
+                center.getChildren().add(addBookButton);
+                addBookButton.setOnAction(r -> {
+                    Book newBook = new Book(titleField.getText(), authorField.getText(), isbnField.getText());
+                    if (dbm.addBook(newBook)) {
+                        center.getChildren().add(new TextArea("Book added!"));
+                    }
+                    else {
+                        center.getChildren().add(new TextArea("Failed to add book..."));
+                    }
+                });
+
+            });
             
+
+            // Add users button
+            addUser.setOnAction(e -> {
+                center.getChildren().clear();
+
+                center.getChildren().add(new Label("Name:"));
+                TextArea nameField = new TextArea();
+                nameField.setPrefRowCount(1);
+                center.getChildren().add(nameField);
+
+                center.getChildren().add(new Label("User ID:"));
+                TextArea idField = new TextArea();
+                idField.setPrefRowCount(1);
+                center.getChildren().add(idField);
+
+                center.getChildren().add(new Label("Type:"));
+                TextArea typeField = new TextArea();
+                typeField.setPrefRowCount(1);
+                center.getChildren().add(typeField);
+
+                Button addUserButton = new Button("Add");
+                center.getChildren().add(addUserButton);
+                addUserButton.setOnAction(r -> {
+                    User newUser = new User(nameField.getText(), idField.getText(), typeField.getText());
+                    if (dbm.addUser(newUser)) {
+                        TextArea success = new TextArea("User added!");
+                        center.getChildren().add(success);
+                    }
+                    else {
+                        TextArea failure = new TextArea("Failed to add user...");
+                        center.getChildren().add(failure);
+                    }
+                });
+
+            });
 
             // Show users button
             showUsers.setOnAction(e -> {
@@ -78,8 +145,9 @@ public class App extends Application {
             // Search books button
             searchBooks.setOnAction(e -> {
                 center.getChildren().clear();
-                center.getChildren().add(new Label("Title: "));
+                center.getChildren().add(new Label("Title:"));
                 TextArea titleField = new TextArea();
+                titleField.setPrefRowCount(1);
                 Button searchTitle = new Button("Search");
                 center.getChildren().addAll(titleField, searchTitle);
                 searchTitle.setOnAction(r -> {
@@ -95,6 +163,7 @@ public class App extends Application {
                 center.getChildren().clear();
                 center.getChildren().add(new Label("Name: "));
                 TextArea nameField = new TextArea();
+                nameField.setPrefRowCount(1);
                 Button searchName = new Button("Search");
                 center.getChildren().addAll(nameField, searchName);
                 searchName.setOnAction(r -> {
@@ -104,6 +173,9 @@ public class App extends Application {
                     center.getChildren().add(textArea);
                 });
             });
+
+            // Borrow book button
+
 
             // Making a scene
             Scene scene = new Scene(borderPane, 800, 600);
