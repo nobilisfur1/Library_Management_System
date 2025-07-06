@@ -227,10 +227,11 @@ public class DatabaseManager {
 
     }
 
-    public void showBooks() {
+    public String showBooks() {
         try {
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM Books");
             ResultSet rs = stmt.executeQuery();
+            String result = "";
 
             while (rs.next()) {
                 String title = rs.getString("title");
@@ -238,12 +239,14 @@ public class DatabaseManager {
                 String isbn = rs.getString("isbn");
                 String borrowerId = rs.getString("borrower_id");
 
-                System.out.println(title + " | " + author + " | " + isbn + " | " + borrowerId);
+                result = result.concat(title + " | " + author + " | " + isbn + " | " + borrowerId + "\n");
                 }
+            return result;
    
         }
         catch (SQLException e) {
             System.out.println("Issue showing books: " + e);
+            return "";
         }
 
     }

@@ -7,14 +7,19 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
 import javafx.application.Platform;
+import services.DatabaseManager;
 
 public class App extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            DatabaseManager dbm = DatabaseManager.getInstance();
+            
             // Set title for stage
             stage.setTitle("Library Management System");
             
@@ -41,11 +46,21 @@ public class App extends Application {
             leftButtons.getStyleClass().add("left-buttons");
             leftButtons.getChildren().addAll(addBook, addUser, showBooks, showUsers, searchBooks, searchUsers, borrowBook, returnBook, exit);
 
+            VBox center = new VBox();
+
             // Creating border pane
             BorderPane borderPane = new BorderPane();
             borderPane.setTop(label);
             borderPane.setAlignment(label, Pos.CENTER);
             borderPane.setLeft(leftButtons);
+            borderPane.setCenter(center);
+
+            // button actions
+            showBooks.setOnAction(e -> {
+                TextArea textArea = new TextArea(dbm.showBooks());
+                center.getChildren().clear();
+                center.getChildren().add(textArea);
+            });
 
             // Making a scene
             Scene scene = new Scene(borderPane, 800, 600);
@@ -61,6 +76,13 @@ public class App extends Application {
             System.out.println(e.getMessage());
 
         }
+
+    }
+
+    public String showBooks() {
+        DatabaseManager dbm = DatabaseManager.getInstance();
+
+        return dbm.showBooks();
 
     }
 
