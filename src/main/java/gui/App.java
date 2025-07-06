@@ -211,6 +211,41 @@ public class App extends Application {
             });
 
             // Return book button
+            returnBook.setOnAction(e -> {
+                center.getChildren().clear();
+
+ 
+                center.getChildren().add(new Label("User id:"));
+                TextArea idField = new TextArea();
+                idField.setPrefRowCount(1);
+                center.getChildren().add(idField);
+
+                center.getChildren().add(new Label("ISBN:"));
+                TextArea isbnField = new TextArea();
+                isbnField.setPrefRowCount(1);
+                center.getChildren().add(isbnField);
+
+                Button returnButton = new Button("Return");
+                center.getChildren().add(returnButton);               
+                returnButton.setOnAction(r -> {
+                    String userId = idField.getText();
+                    String isbn = isbnField.getText();
+                    
+                    if (dbm.returnBook(userId, isbn)) {
+                        TextArea success = new TextArea("Book returned");
+                        success.setPrefRowCount(1);
+                        center.getChildren().clear();
+                        center.getChildren().add(success);
+                    }
+                    else {
+                        TextArea failure = new TextArea("Book return failed...");
+                        failure.setPrefRowCount(1);
+                        center.getChildren().clear();
+                        center.getChildren().add(failure);
+                    }
+                });
+
+            });
             
             // Making a scene
             Scene scene = new Scene(borderPane, 800, 600);

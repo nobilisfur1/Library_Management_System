@@ -135,7 +135,7 @@ public class DatabaseManager {
         try {
             connect.setAutoCommit(false);
 
-            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ? AND borrower_id = null");
+            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ? AND borrower_id IS NULL");
 
             check.setString(1, isbn);
             ResultSet borrowId = check.executeQuery();
@@ -186,22 +186,22 @@ public class DatabaseManager {
         }
     }
 
-    public void returnBook(String userId, String isbn) {
+    public Boolean returnBook(String userId, String isbn) {
         try {
             connect.setAutoCommit(false);
 
-            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ?");
+            PreparedStatement check = connect.prepareStatement("SELECT borrower_id FROM Books WHERE isbn = ? AND borrower_id IS NOT NULL");
             check.setString(1, isbn);
             ResultSet borrowId = check.executeQuery();
 
             if (!borrowId.next()) {
                 System.out.println("Book not found or not borrowed.");
-                return;
+                return false;
             }
 
             if (!borrowId.getString(1).trim().equals(userId)) {
                 System.out.println("Book borrowed by another user, borrowed by: " + borrowId.getString(1));
-                return;
+                return false;
             }
 
             connect.commit();
@@ -216,6 +216,7 @@ public class DatabaseManager {
             }
 
             System.out.println("Issue finding or comparing borrower id: " + e);
+            return false;
         }
 
         try {
@@ -225,6 +226,7 @@ public class DatabaseManager {
             stmt.executeUpdate();
 
             connect.commit();
+            return true;
 
         }
         catch (SQLException e) {
@@ -236,6 +238,7 @@ public class DatabaseManager {
             }
 
             System.out.println("Issue returning book: " + e);
+            return false;
         }
 
     }
